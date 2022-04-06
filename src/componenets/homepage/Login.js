@@ -22,13 +22,17 @@ export default function Login() {
         console.log(response);
         if (response.data && response.status == "200") {
           //handle sign in from cognito
-                alert("Successfully logged in");
-                localStorage.setItem("token", JSON.stringify(response));
-                console.log(isAuthenticated().email);
-        }
-        else {
+          alert("Successfully logged in");
+          localStorage.setItem("token", JSON.stringify(response));
+          console.log(isAuthenticated().email);
+          navigate("/LandingPage");
+        } else {
           alert("Invalid credentials/User not found");
         }
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(error);
       });
   };
 

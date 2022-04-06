@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Dropdown from "react-dropdown";
 import { Form, Col } from "react-bootstrap";
+import { isAuthenticated } from "../Network";
 
 const styles = {
   dropdownGroup: {
@@ -25,7 +26,7 @@ function Requestblood() {
     bloodtype: "",
     amount: 0,
     date: "",
-    email: "vskattekola@gmail.com",
+    email: isAuthenticated().email,
   });
 
   useEffect(() => {
@@ -66,7 +67,14 @@ function Requestblood() {
       .then((response) => {
         console.log(response);
         if (response.data) {
-          alert("Request sent successfully");
+          alert(
+            "Request sent successfully for " +
+              formData.city +
+              " in " +
+              formData.bloodbank +
+              "for " +
+              formData.amount
+          );
         } else {
           alert("Request failed");
         }

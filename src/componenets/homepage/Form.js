@@ -112,28 +112,9 @@ function Form() {
           navigate("/login");
         }}
       >
-          Login
+         Dont have an account-  Login
         </button>
-      <button
-        type="submit"
-        className="btn btn-primary"
-        value="search"
-        onClick={() => {
-          navigate("/search");
-        }}
-      >
-        Search
-      </button>
-      <button
-        type="submit"
-        className="btn btn-primary"
-        value="requestblood"
-        onClick={() => {
-          navigate("/requestblood");
-        }}
-      >
-        Request blood
-      </button>
+     
       <form onSubmit={onsubmit} post="/home">
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">First Name</label>

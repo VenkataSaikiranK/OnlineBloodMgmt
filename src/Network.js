@@ -11,7 +11,9 @@ function isAuthenticated() {
 }
 
 function setTokenOnLogOut() {
+  
   localStorage.removeItem("token");
+  window.location.href = "/";  
 }
 
 export { isAuthenticated, setTokenOnLogOut };
