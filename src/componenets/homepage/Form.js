@@ -36,7 +36,8 @@ function Form() {
         }	
         console.log(data);	
       }	
-    );	
+    );
+
     console.log("Form data is", formData);	
     //save other details to rds	
     axios	
@@ -103,7 +104,16 @@ function Form() {
         Welcome to Canada's biggest online blood bank system
       </h5>
       <h2 style={{ "margin-left": "30px" }}>Register as - Donor</h2>
-
+      <button
+        type="submit"
+        className="btn btn-primary"
+        value="login"
+        onClick={() => {
+          navigate("/login");
+        }}
+      >
+          Login
+        </button>
       <button
         type="submit"
         className="btn btn-primary"

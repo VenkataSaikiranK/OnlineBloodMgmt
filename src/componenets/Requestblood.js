@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Dropdown from "react-dropdown";
-import { Form } from "react-bootstrap";
+import { Form, Col } from "react-bootstrap";
 
 const styles = {
   dropdownGroup: {
@@ -19,11 +19,15 @@ function Requestblood() {
   const [cities, setCities] = useState([]);
   const [response, setResponse] = useState([]);
   const [bloodBanks, setBloodBanks] = useState([]);
-  const [formData, updateFormData] = useState({ amount: "" });
+  const [formData, updateFormData] = useState({
+    bloodbank: "",
+    city: "",
+    bloodtype: "",
+    amount: 0,
+    date: "",
+    email: "vskattekola@gmail.com",
+  });
 
-  function updateamount(event) {
-    updateFormData({ ...formData, amount: event.target.value });
-  }
   useEffect(() => {
     axios.get("http://localhost:5000/getCities").then((response) => {
       if (response.data) {
@@ -38,11 +42,20 @@ function Requestblood() {
     });
   }, []);
 
+  function handleChange(event) {
+    updateFormData({ ...formData, [event.target.name]: event.target.value });
+  }
+
   const onSelectCity = (option) => {
     const tempBloodBanks = response
       .filter((item) => item.city === option.label)
       .map((item) => item.name);
     setBloodBanks(tempBloodBanks);
+    updateFormData({ ...formData, city: option.label });
+  };
+
+  const onSelectBloodBank = (option) => {
+    updateFormData({ ...formData, bloodbank: option.label });
   };
 
   const handleSubmit = (event) => {
@@ -62,9 +75,6 @@ function Requestblood() {
         console.log(error);
       });
   };
-  function updateBlood(event) {
-    updateFormData({ ...formData, blood: event.target.value });
-  }
 
   return (
     <div>
@@ -73,31 +83,36 @@ function Requestblood() {
         <p>Loading...</p>
       ) : (
         <>
-          <div style={styles.dropdownGroup}>
-            <Dropdown
-              options={cities}
-              onChange={onSelectCity}
-              placeholder="Select city"
-            />
-          </div>
-          {bloodBanks && (
-            <div style={styles.dropdownGroup}>
-              <Dropdown
-                options={bloodBanks}
-                // onChange={onSelectCity}
-                placeholder="Select blood bank"
-              />
-            </div>
-          )}
           <form onSubmit={handleSubmit}>
-            <div class="form-group row">
-              <label class="col-sm-2 col-form-label">Amount</label>
-              <div class="col-sm-4">
+            <Col>
+              <div style={styles.dropdownGroup}>
+                <Dropdown
+                  options={cities}
+                  onChange={onSelectCity}
+                  placeholder="Select city"
+                />
+              </div>
+            </Col>
+            {bloodBanks && (
+              <Col>
+                <div style={styles.dropdownGroup}>
+                  <Dropdown
+                    options={bloodBanks}
+                    onChange={onSelectBloodBank}
+                    placeholder="Select blood bank"
+                    name="bloodbank"
+                  />
+                </div>
+              </Col>
+            )}
+            <div className="form-group row">
+              <label className="col-sm-2 col-form-label">Amount</label>
+              <div className="col-sm-4">
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   name="amount"
-                  onChange={updateamount}
+                  onChange={handleChange}
                   value={formData.amount}
                   required
                 />
@@ -107,20 +122,26 @@ function Requestblood() {
               <div className="col-md-4">
                 <Form.Group controlId="date">
                   <Form.Label>Select Date</Form.Label>
-                  <Form.Control type="date" name="date" placeholder="Date" />
+                  <Form.Control
+                    type="date"
+                    name="date"
+                    value={formData.date}
+                    placeholder="Date"
+                    onChange={handleChange}
+                  />
                 </Form.Group>
               </div>
             </div>
-            <div class="form-group row">
-              <label class="col-sm-4 col-form-label">
+            <div className="form-group row">
+              <label className="col-sm-4 col-form-label">
                 Choose your blood type
               </label>
-              <div class="col-sm-4">
+              <div className="col-sm-4">
                 <select
-                  name="Blood_type"
-                  class="form-select"
-                  onChange={updateBlood}
-                  value={formData.blood}
+                  name="bloodtype"
+                  className="form-select"
+                  onChange={handleChange}
+                  value={formData.bloodtype}
                   id="bt"
                 >
                   <option value="O+">O+</option>
@@ -134,14 +155,14 @@ function Requestblood() {
                 </select>
               </div>
             </div>
+            <button
+              type="submit"
+              className="btn btn-primary"
+              value="requestblood"
+            >
+              Submit to Request blood
+            </button>
           </form>
-          <button
-            type="submit"
-            className="btn btn-primary"
-            value="requestblood"
-          >
-            Submit to Request blood
-          </button>
         </>
       )}
     </div>
