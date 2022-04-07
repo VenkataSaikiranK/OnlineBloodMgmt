@@ -33,6 +33,17 @@ export default function LandingPage() {
       >
         Request blood
       </button>
+      <button
+        type="submit"
+        className="btn btn-primary"
+        value="refundblood"
+        onClick={() => {
+          navigate("/refund");
+        }}
+      >
+        Cancel booking
+      </button>
+
       {isAuthenticated() && (
         <button
           variant="danger"

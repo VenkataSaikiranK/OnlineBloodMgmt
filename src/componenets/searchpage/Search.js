@@ -10,21 +10,28 @@ export default function Search() {
   const [number, setNumber] = useState("");
   const [error, setError] = useState("");
   const [user, setUser] = useState("");
-
   const validateData = () => {
     console.log("in validate");
     var data = {
       city: city,
       bloodGroup: bloodGroup,
     };
-    axios.post("http://localhost:5000/searchUsers", data).then((response) => {
-      console.log(response.data);
-      if (response.data) {
-        setUser(response.data);
-        displayUsers();
-      } else {
-        return <p> There are no users available</p>;
-      }
+    axios.post("http://3.239.66.148:5000/searchUsers", data).then((response) => {
+      //console.log(response.data);
+      let sendData = {
+        data: response.data,
+      };
+      console.log("before");
+      axios.post("http://52.3.82.177:5000/recommend/", sendData).then((res) => {
+        console.log("in second post call");
+        console.log(res.data["data"]);
+        if (res.data["data"]) {
+          setUser(res.data["data"]);
+          displayUsers();
+        } else {
+          return <p> There are no users available</p>;
+        }
+      });
     });
   };
   function users() {
@@ -35,23 +42,30 @@ export default function Search() {
       return (
         <>
           <div className="card" style={{ width: "18rem" }}>
-            {users().map((data, id) => (
-              <div className="card-body">
-                <h5 className="card-title">
-                  {" "}
-                  {data.firstname} {data.lastname}
-                </h5>
-                <p className="card-text">{data.email}</p>
-                <p className="card-text">{data.phone}</p>
-              </div>
-            ))}
+            {users().map((data, id) => {
+              let custStyle = "card-body";
+              if (data.willing === 1) {
+                custStyle = "card-body bg-info";
+              }
+              return (
+                <div className={custStyle} key={id}>
+                  <h5 className="card-title">
+                    {" "}
+                    {data.firstname} {data.lastname}
+                  </h5>
+                  <p className="card-text">{data.email}</p>
+                  <p className="card-text">{data.phone}</p>
+                </div>
+              );
+            })}
             ;
+            
           </div>
+          <h3>ML Generated info above - Highlighted users are most likely to donate blood</h3>
         </>
       );
     }
   }
-
   return (
     <div>
       <div className="mt-4 mb-4 w-50">

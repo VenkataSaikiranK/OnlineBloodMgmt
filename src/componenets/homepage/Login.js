@@ -17,7 +17,7 @@ export default function Login() {
     event.preventDefault();
     //handle sign in from rds
     axios
-      .post("http://localhost:5000/login", formData)
+      .post("http://3.239.66.148:5000/login", formData)
       .then(function (response) {
         console.log(response);
         if (response.data && response.status == "200") {

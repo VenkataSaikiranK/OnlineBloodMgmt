@@ -30,7 +30,7 @@ function Requestblood() {
   });
 
   useEffect(() => {
-    axios.get("http://localhost:5000/getCities").then((response) => {
+    axios.get("http://3.239.66.148:5000/getCities").then((response) => {
       if (response.data) {
         setResponse(response.data);
         const tempCities = [
@@ -63,7 +63,7 @@ function Requestblood() {
     event.preventDefault();
     console.log(formData);
     axios
-      .post("http://localhost:5000/updateSlotBooking", formData)
+      .post("http://3.239.66.148:5000/updateSlotBooking", formData)
       .then((response) => {
         console.log(response);
         if (response.data) {

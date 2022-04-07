@@ -6,101 +6,101 @@ import axios from "axios";
 
 function Form() {
   const navigate = useNavigate();
-  const onsubmit = (event) => {	
-    event.preventDefault();	
-    var lastname = new CognitoUserAttribute({	
-      Name: "lastname",	
-      Value: formData.lastname,	
-    });	
-    var phone_number = new CognitoUserAttribute({	
-      Name: "phone_number",	
-      Value: formData.phone_number,	
-    });	
-    var firstname = new CognitoUserAttribute({	
-      Name: "firstname",	
-      Value: formData.firstname,	
-    });	
-    var address = new CognitoUserAttribute({	
-      Name: "address",	
-      Value: formData.address,	
-    });	
-    //for cognito	
-    Userpool.signUp(	
-      formData.email,	
-      formData.password,	
-      [],	
-      null,	
-      (err, data) => {	
-        if (err) {	
-          console.log(err);	
-        }	
-        console.log(data);	
-      }	
+  const onsubmit = (event) => {
+    event.preventDefault();
+    var lastname = new CognitoUserAttribute({
+      Name: "lastname",
+      Value: formData.lastname,
+    });
+    var phone_number = new CognitoUserAttribute({
+      Name: "phone_number",
+      Value: formData.phone_number,
+    });
+    var firstname = new CognitoUserAttribute({
+      Name: "firstname",
+      Value: formData.firstname,
+    });
+    var address = new CognitoUserAttribute({
+      Name: "address",
+      Value: formData.address,
+    });
+    //for cognito
+    Userpool.signUp(
+      formData.email,
+      formData.password,
+      [],
+      null,
+      (err, data) => {
+        if (err) {
+          console.log(err);
+        }
+        console.log(data);
+      }
     );
 
-    console.log("Form data is", formData);	
-    //save other details to rds	
-    axios	
-      .post("http://localhost:5000/signup", formData)	
-      .then(function (response) {	
-        console.log(response);	
-        alert("Successfully registered");	
-      })	
-      .catch((error) => {	
-        console.log(error);	
-      });	
+    console.log("Form data is", formData);
+    //save other details to rds
+    axios
+      .post("http://3.239.66.148:5000/signup", formData)
+      .then(function (response) {
+        console.log(response);
+        alert("Successfully registered");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
-  const [formData, updateFormData] = useState({	
-    firstname: "",	
-    lastname: "",	
-    age: "",	
-    address: "",	
-    gender: "1",	
-    email: "",	
-    phone_number: "",	
-    password: "",	
-    blood: "O+",	
-    timesdonated: 0,	
-    yon: "1",	
+  const [formData, updateFormData] = useState({
+    firstname: "",
+    lastname: "",
+    age: "",
+    address: "",
+    gender: "1",
+    email: "",
+    phone_number: "",
+    password: "",
+    blood: "O+",
+    timesdonated: 0,
+    yon: "1",
   });
-  function updateFname(event) {	
-    updateFormData({ ...formData, firstname: event.target.value });	
-  }	
-  function updateLname(event) {	
-    updateFormData({ ...formData, lastname: event.target.value });	
-  }	
-  function updateAge(event) {	
-    updateFormData({ ...formData, age: event.target.value });	
-  }	
-  function updateAddress(event) {	
-    updateFormData({ ...formData, address: event.target.value });	
-  }	
-  function updateGender(event) {	
-    updateFormData({ ...formData, gender: event.target.value });	
-  }	
-  function updateEmail(event) {	
-    updateFormData({ ...formData, email: event.target.value });	
-  }	
-  function updatephone(event) {	
-    updateFormData({ ...formData, phone_number: event.target.value });	
-  }	
-  function updatePassword(event) {	
-    updateFormData({ ...formData, password: event.target.value });	
-  }	
-  function updateBlood(event) {	
-    updateFormData({ ...formData, blood: event.target.value });	
-  }	
-  function updateTd(event) {	
-    updateFormData({ ...formData, timesdonated: event.target.value });	
-  }	
-  function updateYon(event) {	
-    updateFormData({ ...formData, yon: event.target.value });	
+  function updateFname(event) {
+    updateFormData({ ...formData, firstname: event.target.value });
+  }
+  function updateLname(event) {
+    updateFormData({ ...formData, lastname: event.target.value });
+  }
+  function updateAge(event) {
+    updateFormData({ ...formData, age: event.target.value });
+  }
+  function updateAddress(event) {
+    updateFormData({ ...formData, address: event.target.value });
+  }
+  function updateGender(event) {
+    updateFormData({ ...formData, gender: event.target.value });
+  }
+  function updateEmail(event) {
+    updateFormData({ ...formData, email: event.target.value });
+  }
+  function updatephone(event) {
+    updateFormData({ ...formData, phone_number: event.target.value });
+  }
+  function updatePassword(event) {
+    updateFormData({ ...formData, password: event.target.value });
+  }
+  function updateBlood(event) {
+    updateFormData({ ...formData, blood: event.target.value });
+  }
+  function updateTd(event) {
+    updateFormData({ ...formData, timesdonated: event.target.value });
+  }
+  function updateYon(event) {
+    updateFormData({ ...formData, yon: event.target.value });
   }
 
   return (
     <div>
-      <h2>Be a helping hand</h2>
-      <h5 style={{ "border-bottom": "5px solid #ddd" }}>
+      <h2 style={{marginLeft:5+"px"}}>Be a helping hand</h2>
+      <h5 style={{ "border-bottom": "5px solid #ddd", marginLeft:5+"px" }}>
         Welcome to Canada's biggest online blood bank system
       </h5>
       <h2 style={{ "margin-left": "30px" }}>Register as - Donor</h2>
@@ -108,14 +108,15 @@ function Form() {
         type="submit"
         className="btn btn-primary"
         value="login"
+        style={{float:"right"}}
         onClick={() => {
           navigate("/login");
         }}
       >
-         Dont have an account-  Login
-        </button>
-     
-      <form onSubmit={onsubmit} post="/home">
+        Don't have an account- Login
+      </button>
+
+      <form onSubmit={onsubmit} post="/home" style={{width: "80%",padding: "32px",border: "10px solid #F6F6F6"}}>
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">First Name</label>
           <div class="col-sm-4">

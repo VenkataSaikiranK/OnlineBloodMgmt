@@ -5,6 +5,7 @@ import Form from "../src/componenets/homepage/Form";
 import Requestblood from "../src/componenets/Requestblood";
 import Login from "../src/componenets/homepage/Login";
 import LandingPage from "../src/componenets/homepage/LandingPage";
+import Refund from "./componenets/Refund";
 
 function AppRoutes(){
 
@@ -14,13 +15,12 @@ function AppRoutes(){
                 <Route exact path="/" element={<Form/>} />
                 <Route exact path="/search" element={<Search/>} />
                 <Route exact path="/requestblood" element={<Requestblood/>} />
+                <Route exact path="/refund" element={<Refund/>} />
                 <Route exact path="/login" element={<Login/>} />
                 <Route exact path="/LandingPage" element={<LandingPage/>} />
             </Routes>
         </BrowserRouter>
     )
-
-
 }
 
 export default AppRoutes;
